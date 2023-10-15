@@ -61,8 +61,3 @@ int cntlower(char str[]) {
     return count;
 }
 ```
-
-### implementing `SWAP`
-```C
-#define SWAP(t, x, y){t temp = x; x=y; y=temp;}
-```
