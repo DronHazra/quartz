@@ -66,7 +66,13 @@ int cntlower(char str[]) {
 ```C
 #define SWAP(t, x, y){t temp = x; x=y; y=temp;}
 ```
-<<<<<<< HEAD
+
+
+expanding the macro for `SWAP(int, v[i++], w[f(x)])`, we get:
+```C
+{int temp = v[i++]; v[i++] = w[f(x)], w[f(x)] = temp}
+```
+`i++` returns the current value of `i` and then increments `i`, which means that the second `v[i++]` refers not to the element referred to by the argument to `SWAP`, but rather 
 
 ## lectures 3 and 4
 > if `p` is a pointer, what does `p[-2]` mean? when is this legal?
@@ -96,10 +102,4 @@ const char *strfind(const char *needle, const char *hay) {
     return found;
 }
 ```
-=======
-expanding the macro for `SWAP(int, v[i++], w[f(x)])`, we get:
-```C
-{int temp = v[i++]; v[i++] = w[f(x)], w[f(x)] = temp}
-```
-`i++` returns the current value of `i` and then increments `i`, which means that the second `v[i++]` refers not to the element referred to by the argument to `SWAP`, but rather 
->>>>>>> 2b0f7f4 (Oct-17-2023 regular sync)
+
