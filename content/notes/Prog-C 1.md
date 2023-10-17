@@ -66,3 +66,32 @@ int cntlower(char str[]) {
 ```C
 #define SWAP(t, x, y){t temp = x; x=y; y=temp;}
 ```
+
+## lectures 3 and 4
+> if `p` is a pointer, what does `p[-2]` mean? when is this legal?
+
+`p[-2]` is a shorthand for dereferencing the value stored in memory 2 times the size of the type pointed to by `p` before the address in `p`. the compiler can't tell whether it's legal, but if the computed address isn't in use by the program then the program will get an error at runtime. 
+
+> Write a string search function:
+
+```C
+const char *strfind(const char *needle, const char *hay) {
+    int i = 0;
+    char *found = NULL;
+    while(hay[i] != '\0') {
+	int j = 0;
+	while((hay[i+j] != '\0') && (needle[j] == hay[i+j])) {
+	    j++;
+	    if (needle[j] == '\0') {
+		// if we've matched the entire needle
+		found = hay + i;
+		break;
+	    }
+	}
+	if (found != NULL) {
+	    break;
+	}
+    }
+    return found;
+}
+```
