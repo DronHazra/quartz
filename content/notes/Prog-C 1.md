@@ -79,7 +79,7 @@ expanding the macro for `SWAP(int, v[i++], w[f(x)])`, we get:
 
 `p[-2]` is a shorthand for dereferencing the value stored in memory 2 times the size of the type pointed to by `p` before the address in `p`. the compiler can't tell whether it's legal, but if the computed address isn't in use by the program then the program will get an error at runtime. 
 
-> Write a string search function:
+### string searching
 
 ```C
 const char *strfind(const char *needle, const char *hay) {
@@ -102,4 +102,137 @@ const char *strfind(const char *needle, const char *hay) {
     return found;
 }
 ```
+
+### adding characters in a large file
+
+```
+dron@jirachi c ) time ./sum_file_mmap ~/datasets/ImageNet/ILSVRC2012_devkit_t12.tar.gz
+
+file is 2568145 bytes long
+
+sum: 328115312, bytes read: 2568145
+
+________________________________________________________
+
+Executed in    9.71 millis    fish           external
+
+   usr time    4.83 millis    0.24 millis    4.59 millis
+
+   sys time    4.22 millis    2.08 millis    2.14 millis
+
+  
+
+dron@jirachi c ) time ./sum_file ~/datasets/ImageNet/ILSVRC2012_devkit_t12.tar.gz
+
+sum: 328115312, bytes read: 2568145
+
+________________________________________________________
+
+Executed in  111.94 millis    fish           external
+
+   usr time  104.84 millis    0.15 millis  104.69 millis
+
+   sys time    6.65 millis    1.33 millis    5.32 millis
+```
+
+and with a bigger file:
+
+```
+dron@jirachi c ) time ./sum_file_mmap ~/Downloads/UTM.dmg           **(miniforge3)**
+
+file is 244438799 bytes long
+
+sum: -2019725168, bytes read: 244438799
+
+________________________________________________________
+
+Executed in  620.94 millis    fish           external
+
+   usr time  233.32 millis    0.26 millis  233.06 millis
+
+   sys time   35.98 millis    2.59 millis   33.38 millis
+
+  
+
+dron@jirachi c ) time ./sum_file ~/Downloads/UTM.dmg                **(miniforge3)**
+
+sum: -2019725168, bytes read: 244438799
+
+________________________________________________________
+
+Executed in    8.43 secs    fish           external
+
+   usr time    8.20 secs    0.18 millis    8.20 secs
+
+   sys time    0.21 secs    1.92 millis    0.21 secs
+```
+
+the `fread` one:
+
+```C
+#include <stdio.h>
+int main(int argc, char *argv[]) {
+    FILE *fp;
+    unsigned char buffer;
+    int bytes_read = 0;
+    if ((fp=fopen(argv[1], "rb")) == 0) {
+        perror("fopen error:");
+        return 1;
+    }
+    int sum = 0;
+    while(!feof(fp)) {
+        bytes_read += fread(&buffer, sizeof(char), 1, fp);
+
+        sum += buffer;
+    }
+    printf("sum: %d, bytes read: %d", sum, bytes_read);
+    return 0;
+}
+```
+
+and the `mmap` one:
+```C
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <sys/stat.h>
+int main(int argc, char *argv[]) {
+
+    int bytes_read = 0;
+    int fd = open(argv[1], O_RDWR);
+    if (fd == -1) {
+        perror("open error:");
+        return 1;
+    }
+
+    // get size
+    struct stat statbuf;
+    int err = fstat(fd, &statbuf);
+    if (err < 0) {
+        perror("fstat error:");
+        return 1;
+    }
+    printf("file is %lld bytes long\n", statbuf.st_size);
+    // set up buffer
+    unsigned char *buffer = mmap(
+        NULL, statbuf.st_size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0
+    );
+    if (buffer == MAP_FAILED) {
+        perror("mapping failed:");
+        return 1;
+    }
+    int sum = 0;
+    for(int i=0; i < statbuf.st_size; i++) {
+        sum += buffer[i];
+        bytes_read += 1;
+    }
+    printf("sum: %d, bytes read: %d", sum, bytes_read);
+    close(fd);
+    munmap(buffer, statbuf.st_size);
+    return 0;
+}
+```
+
+the `mmap` version seems to be much faster! the performance on the large file was around 1 Mb/s. rerunning seems to eliminate get lower wall times, presumably because the ssd has some internal cache or something? whereas on first run the program has to wait for the disk to lookup those blocks, so the program sleeps during that time?
 
