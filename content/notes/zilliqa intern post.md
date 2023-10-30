@@ -73,19 +73,28 @@ of course, implementing a meta table of this sort is profoundly annoying in an a
 
   
 
-perhaps some personal information is due. before working at zilliqa, i had deleted more rust code than i’d written (i.e. i deleted the default code from a new cargo project and nothing more). but i appreciate the confidence (and patience!) my mentors richard and james had in me, throwing me into the pdt codebase written entirely in rust and answering my many, many, many questions. by following patterns in the codebase i was mostly able to get up to speed and get to writing code:)
+perhaps some personal information is due. before working at zilliqa, i had deleted more rust code than i’d written (i.e. i deleted the default code from a new cargo project and nothing more). but i appreciate the confidence (and patience!) my mentors richard and james had in me, throwing me into the pdt codebase written entirely in rust and answering my many, many, many questions. 
 
-  
-  
-  
+my first piece of work was taking apart the codebase and refactoring all the functionality i wanted across both backends into a shared library. this was a really good introduction to rust’s type system
 
-the first bit was taking apart the codebase and refactoring all the functionality i wanted across both backends into a shared library. this was a really good introduction to rust’s type system
 
-  
-
-![](https://lh6.googleusercontent.com/a67ELIHmGePlQu97TtbzeIu4D_Vxh1jK0JCtpiYxdkoUA56NtejsFcpPdVDYMXuYeGtRjddgrMKMSLyCEx4S7Ej9Htt7BbAlAIJ1g3O0EpJrrZ4pENeEbV9YL7VZZUUcrGRQB8eaTX7wDpDLX7O89IA)
-
-  
+```Rust
+pub fn txns<'a>(
+	&'a self,
+	key: &ProtoMicroBlockKey,
+	mb: &'a ProtoMicroBlock,
+) -> Result<Box<dyn Iterator<Item = (H256, Option<ProtoTransactionWithReceipt>)> + 'a>> {
+	let blk_id = key.epochnum;
+	Ok(Box::new(mb.tranhashes.iter().map(move |x| {
+		let hash = H256::from_slice(&x);
+		if let Ok(maybe_txn) = self.db.get_tx_body(blk_id, hash) {
+			(hash, maybe_txn)
+		} else {
+			(hash, None)
+		}
+	})))
+}
+```  
 
 [about 2 weeks in i finally understood what these types meant!]  
   
@@ -114,5 +123,4 @@ this was a fun one. here's how my process went:
 2. can't do that without knowing the type beforehand, so let me serialize into json and *deserialize* into a hashmap and iterate over the keys to get each row
 3. ok but now postgres thinks every field is json, and i can't cast the types without knowing the types
 
-richard at this point suggested maybe using a macro! i'd heard of the concept of macros before (in this thing called... lisp) but i'd never used them before.
-
+richard at this point suggested maybe using a macro! i'd heard of the concept of macros before (in this thing called... lisp) but i'd never used them before. and i have to say — macros are *so cool*. rust has two kinds of macros — declarative and procedural. declaratives are some
