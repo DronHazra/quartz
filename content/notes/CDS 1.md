@@ -29,3 +29,89 @@ a semaphore is more general than a mutex though, because we can manage concurren
 
 a binary semaphore is equivalent to a mutex anyway. a larger semaphore definitely can't be expressed with just one mutex (it only contains one bit of information). even if you have N mutexes, you can't atomically get access to the state of all of them. also, N-resource semaphores don't usually provide mutual exclusion, since multiple threads might be in the relevant section of code. so a mutex would be more restrictive, would probably impose some order of resource allocation — seems impossible.
 
+## extending MRSW
+i'd use another shared variable that tracks the highest priority thread waiting for a lock. ignoring all the read/write logic for now, it'd look something like this:
+
+```C++
+int nr = 0;
+int max_prio = 0;
+rSem = new Semaphore(1);
+wSem = new Semaphore(2);
+turn = new Semaphore(1);
+plock = new Semaphore(1);
+```
+
+and then you'd have something like, assuming the thread priority is `p`,
+
+```C++
+wait(plock)
+if(p > max_prio) {
+	max_prio = p;
+	signal(plock)
+	wait(turn)
+	// do work
+	signal(turn)
+}
+else {
+	//what.... to do here....
+}
+```
+
+ok so that doesn't work, because what do you do if you aren't of high enough priority?
+
+so instead we can have an array of binary semaphores all initialized to 1 for each priority level, indicating whether that priority slot is free or not. we'll still keep `max_prio` around so we know where to start counting down. 
+
+```C++
+wait(free[p]);
+wait(plock);
+max_prio = max(p, max_prio);
+for(int i=max_prio; i>=0; i--) {
+	signal(max_prio);
+	wait(free[p])
+}
+while(p < max_prio) {
+	signal(plock);
+	wait(free[max_prio]);
+	signal(free[max_prio]);
+	wait(plock);
+}
+max_prio = max(p, max_prio);
+signal(plock);
+wait(free[p]);
+wait(turn);
+//do work
+signal(turn);
+signal(free[p]);
+
+
+if (p > max_prio) {
+	max_prio = p;
+	signal(plock);
+	wait(free[p]);
+	// your priority gives you permission to enter the queue to 
+	// do work
+	wait(turn);
+	// do work
+	signal(turn);
+	signal(free[p]);
+}
+else {
+	int x = max_prio;
+	while(x > p) {
+		signal(plock);
+		wait(free[x]);
+		signal(free[x]);
+		wait(plock);
+		x = 
+	}
+	for(int x = max_prio; x >=p; x--) {
+		// i guess... maxprio only goes up?
+		wait(free[x]);
+		signal(free[x]);
+		x = max
+	}
+	// will only get here once all higher priority 
+	wait(free[p]);
+	
+}
+```
