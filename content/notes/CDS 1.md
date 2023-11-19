@@ -30,6 +30,27 @@ a semaphore is more general than a mutex though, because we can manage concurren
 a binary semaphore is equivalent to a mutex anyway. a larger semaphore definitely can't be expressed with just one mutex (it only contains one bit of information). even if you have N mutexes, you can't atomically get access to the state of all of them. also, N-resource semaphores don't usually provide mutual exclusion, since multiple threads might be in the relevant section of code. so a mutex would be more restrictive, would probably impose some order of resource allocation — seems impossible.
 
 ## extending MRSW
+
+i've left in a bunch of process work under here, but here's the part that worked:
+
+```C++
+for(int x=p; x>=0; x--) {
+	wait(free[x]);
+}
+//do work
+for(int x=0; x <=p; x--) {
+	signal(free[x]);
+}
+```
+
+here higher-priority threads have lower `p`s. a lower priority thread must wait for all other thread of lower threads to clear out before they run.
+
+of course, you have classic scheduling problems, like starvation — low priority threads may never run in this model. such as it is. 
+
+---
+
+
+
 i'd use another shared variable that tracks the highest priority thread waiting for a lock. ignoring all the read/write logic for now, it'd look something like this:
 
 ```C++
@@ -115,3 +136,74 @@ else {
 	
 }
 ```
+
+i'm trying this one more time, fresh. here's the plan:
+ - there's a lock for each priority
+ - whenever a thread wants to enter the protected section, they have to hold all the locks for all lower priorities. 
+ - but, we want to make sure that, when a thread is of high priority and is waiting for a lock, threads of lower priority wait behind them
+ - to facilitate this, we have threads acquire locks starting from the highest waiting priority. they must acquire and then release these locks.
+ - once they have acquired and released all higher priority locks (confirming that no higher priority thread is waiting), they start acquiring and holding the rest of the locks
+ - once they hold all the relevant locks, they do the work, and then release them.
+
+when i tried to implement this, i also realized that we probably want this whole lock acquiring process to be critical, as in, only one thread should be iterating through locks at a time.
+
+```C++
+int max_prio = 0;
+plock = new Semaphore(1);
+free[] = [new Semaphore(1), ...]
+```
+
+```C++
+wait(plock); //plock does double duty of protecting max_prio and our entire lock iteration process
+max_prio = max(p, max_prio);
+while(p < max_prio) {
+	if(!try_wait(free[max_prio])) {
+		signal(plock);
+		wait(free[max_prio])
+	}
+	wait(free[max_prio]);
+	wait(plock);
+	max_prio--;
+	signal(plock);
+	signal(free[max_prio]);
+}
+while
+```
+
+
+ok one last try this is so annoying
+
+```C++
+for(int x=p; x>=0; x--) {
+	wait(free[x]);
+}
+//do work
+for(int x=p; x>=0; x--) {
+	signal(free[x])
+}
+```
+
+the issue with this is in the following:
+ - $T_1$ (with priority 1, this stays the convention) comes in and starts doing work
+ - then another thread $T_1'$ comes and waits
+ - a thread $T_2$ with priority 2 comes in and waits
+ - $T_1$ releases `free[1]` but this gives it to $T_1'$, and so on, and then $T_1'$ starts doing work
+ - another thread of priority 1 could easily come again and again, and $T_2$ will simply have to wait for all the $T_1$'s
+
+wait a second. what if we invert this priority system so that 0 is the highest priority. and we make it so that threads release the highest priority lock first
+
+```C++
+for(int x=p; x>=0; x--) {
+	wait(free[x]);
+}
+//do work
+for(int x=0; x <=p; x--) {
+	signal(free[x]);
+}
+```
+
+
+## await is problematic
+`await()` can execute arbitrary computations, and this is bad. in particular, *when* do we run the computations specified in await? it might be nontrivial to tell when the condition being awaited is true — so we'd have compute the condition every time we wanted to check. if you do this each time the scheduler runs like e.g. `signal` in a semaphore, then the scheduler is now executing some arbitrary bit of user code — this is obviously bad because the process can then "steal cycles". we might instead make the thread spin, waiting for its condition, but this is inefficient. 
+
+instead, we might force explicit condition variables that dont store any state. 
