@@ -43,6 +43,12 @@ We’ll get much more into Rust concurrency stuff later… because it's a joy to
 
 Let’s say we have a batch size of 100 blocks, and 5 threads. then we’ll divvy up our range of blocks into batches of 100 and thread $i$ will handle every $i$-th batch. 
 
+$$\{[0, 100), [200, 300), \dots\}$$
+
+$$\{[100, 200), [300, 400), \dots\}$$
+
+$$\{[0, 200), [300, 400), [500, 600)\}$$
+
   
 
 [diagram]
