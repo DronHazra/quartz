@@ -1,24 +1,14 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import style from "../styles/listPage.scss"
-import { PageList, SortFn } from "../PageList"
+import { PageList } from "../PageList"
 import { FullSlug, getAllSegmentPrefixes, simplifySlug } from "../../util/path"
 import { QuartzPluginData } from "../../plugins/vfile"
 import { Root } from "hast"
 import { htmlToJsx } from "../../util/jsx"
 import { i18n } from "../../i18n"
 
-interface TagContentOptions {
-  sort?: SortFn
-  numPages: number
-}
-
-const defaultOptions: TagContentOptions = {
-  numPages: 10,
-}
-
-export default ((opts?: Partial<TagContentOptions>) => {
-  const options: TagContentOptions = { ...defaultOptions, ...opts }
-
+export default ((opts?: { sort?: (f1: QuartzPluginData, f2: QuartzPluginData) => number }) => {
+  const numPages = 10
   const TagContent: QuartzComponent = (props: QuartzComponentProps) => {
     const { tree, fileData, allFiles, cfg } = props
     const slug = fileData.slug
@@ -82,18 +72,16 @@ export default ((opts?: Partial<TagContentOptions>) => {
                   <div class="page-listing">
                     <p>
                       {i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}
-                      {pages.length > options.numPages && (
+                      {pages.length > numPages && (
                         <>
                           {" "}
                           <span>
-                            {i18n(cfg.locale).pages.tagContent.showingFirst({
-                              count: options.numPages,
-                            })}
+                            {i18n(cfg.locale).pages.tagContent.showingFirst({ count: numPages })}
                           </span>
                         </>
                       )}
                     </p>
-                    <PageList limit={options.numPages} {...listProps} sort={opts?.sort} />
+                    <PageList limit={numPages} {...listProps} sort={opts?.sort} />
                   </div>
                 </div>
               )

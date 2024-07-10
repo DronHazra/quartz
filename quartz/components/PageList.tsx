@@ -4,9 +4,9 @@ import { Date, getDate } from "./Date"
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { GlobalConfiguration } from "../cfg"
 
-export type SortFn = (f1: QuartzPluginData, f2: QuartzPluginData) => number
-
-export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
+export function byDateAndAlphabetical(
+  cfg: GlobalConfiguration,
+): (f1: QuartzPluginData, f2: QuartzPluginData) => number {
   return (f1, f2) => {
     if (f1.dates && f2.dates) {
       // sort descending
@@ -27,7 +27,7 @@ export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
 
 type Props = {
   limit?: number
-  sort?: SortFn
+  sort?: (f1: QuartzPluginData, f2: QuartzPluginData) => number
 } & QuartzComponentProps
 
 export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort }: Props) => {
@@ -46,13 +46,11 @@ export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort
         return (
           <li class="section-li">
             <div class="section">
-              <div>
-                {page.dates && (
-                  <p class="meta">
-                    <Date date={getDate(cfg, page)!} locale={cfg.locale} />
-                  </p>
-                )}
-              </div>
+              {page.dates && (
+                <p class="meta">
+                  <Date date={getDate(cfg, page)!} locale={cfg.locale} />
+                </p>
+              )}
               <div class="desc">
                 <h3>
                   <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
