@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     },
     baseUrl: "garden.dronhazra.com",
     ignorePatterns: ["private", "templates", ".obsidian"],
-    defaultDateType: "created",
+    defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
