@@ -21,10 +21,20 @@ const defaultOptions = {
     if ((!a.file && !b.file) || (a.file && b.file)) {
       // numeric: true: Whether numeric collation should be used, such that "1" < "2" < "10"
       // sensitivity: "base": Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A
-      return a.displayName.localeCompare(b.displayName, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      })
+      // return a.displayName.localeCompare(b.displayName, undefined, {
+      //   numeric: true,
+      //   sensitivity: "base",
+      // })
+
+      // Sort by last modified date, most recent first
+      const dateA = a.file?.dates?.modified ?? a.file?.dates?.created
+      const dateB = b.file?.dates?.modified ?? b.file?.dates?.created
+
+      if (!dateA && !dateB) return 0
+      if (!dateA) return 1
+      if (!dateB) return -1
+
+      return dateB.getTime() - dateA.getTime()
     }
 
     if (a.file && !b.file) {
