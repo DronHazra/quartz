@@ -22,7 +22,7 @@ effect terms:
 
 so we're introduction and elimination rules for the $\text{ref} X$ *monad*
 
-and notably the fact that $\text{return }e$ doesn't have an effect means that we can promote pure computations to impure computations. monadic type systems are a *conservative approximation*, they assume that everything with the monad type is impure, and so anything that relies on that computation is impure, even if it's not. this means you can't encapsulate exceptions.
+and notably the fact that $\text{return }e$ doesn't have an effect means that we can promote pure computations to impure computations. monadic type systems are a *conservative approximation*, they assume that everything with the monad type is impure, and so anything that relies on that computation is impure, even if it's not. this means you can't encapsulate exceptions — the type system thinks you might raise an exception since your inner function raises one, even though you've caught all possible exceptions. 
 
 so now all our proofs are mutual inductions: we prove exchange and weakening mutually between pure and impure.
 

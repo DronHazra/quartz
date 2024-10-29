@@ -167,34 +167,18 @@ right so now the policy bits:
 
 hmm the correct way to discuss this is basically to talk about a bunch of attributes:
 
-  
-
 * AS PATH length — trivial  
-
-* local preference in iBGP, lets you say (in essence) which border router to exit from (which might decide which AS you go via)  
-
-* **![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfUcujPDAEfPOFD1HIqlDEZhBE4uJjAOjX5XTyp-gc9yrMgfhK0fZzwnz6A2-fBHHfBAkt4jwqf87EJq7hv4NGk2iAClc6eTDjCGsy2vNP7GW4uwzQqAnfZeaRNjGrtjX9JxYym5C0BoXtVfPwzNCsWeFlJ?key=E3KfSIv_6lfmAhlBjZSwsQ)  
-
+* local preference in iBGP, lets you say (in essence) which border router to exit from (which might decide which AS you go via) 
 * ASPATH propagates as a list, which gives you loop prevention for free  
-
 * (but traffic doesn’t need to follow the ASPATH\! it can, or it can not, yk, basically its this big coordination game)  
-
 * and this is because the AS graph depends on your point of view because of information hiding — different players have different views of the game state  
-
 * local preference is a good way to control your outbound traffic… but how do we do this for inbound traffic?  
-
 * well… its a little dumb… but you can just let your “primary” inbound router have a short AS path length, and just artificially duplicate nodes in the AS path your backup router advertises  
-
 * this doesn’t always work, because local preferences take precedence over ASPATH length  
-
-  * so you can Call Human (do some negotiating) and then use the community attribute to do the path length  
-
+	* so you can Call Human (do some negotiating) and then use the community attribute to do the path length  
 * all of this is decided by human coordination/contracts/negotiating etc  
-
 * MED \= multi exit discriminator: advertising internal distance to a certain prefix  
-
-  * this can be used to make hot potato routing nicely  
-
-  * make provider (high bandwidth backbone) carry the bits most of the way
-
+	* this can be used to make hot potato routing nicely  
+	* make provider (high bandwidth backbone) carry the bits most of the way
+* 
   
