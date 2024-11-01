@@ -180,5 +180,9 @@ hmm the correct way to discuss this is basically to talk about a bunch of attrib
 * MED \= multi exit discriminator: advertising internal distance to a certain prefix  
 	* this can be used to make hot potato routing nicely  
 	* make provider (high bandwidth backbone) carry the bits most of the way
-* 
-  
+
+
+
+
+
+[[notes/multicast routing]]
