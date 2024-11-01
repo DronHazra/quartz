@@ -1,5 +1,5 @@
 ---
-title: Border Gateway Protocol]
+title: Border Gateway Protocol
 aliases:
   - BGP
 tags:
