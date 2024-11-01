@@ -30,3 +30,21 @@ er.... don't really understand this yet but i'll get there. but some interesting
 - evaluation of this lambda-mu type theory is nondeterministic, it doesn't evaluate the same way every time (evaluation order matters)
 - apparently, this is a calculus for *stack machines* i.e. CPS?? "static single assignment form"
 
+ok! so now we can try to prove progress and preservation for lamba-mu
+
+we can prove preservation just fine, we don't even need induction (try it!)
+
+but when we try to prove progress, we find that we can't actually write down any "closed contradictions" — i.e. we can't write any programs of continuation type without free variables.
+
+possibly linked to the fact that you often need "truth tables" to interpret things in classical logic? like if you need truth tables, that means that you have free variables, for each free variable you test both true and false, and that's what gives you the semantics of the logic. but constructive logic is purely syntactic, we can define the semantics recursively on the syntax..?
+
+neel claims you can make classical logic into a subset of constructive logic. unsure how. let's find out:
+
+we start by talking about double-negation elimination. you don't have double negation elimination in constructive logic. but you *do actually* have triple negation elimination, i.e. *double negation is irrefutable.* we can write down a program: $$\lambda k. \lambda a. k (\lambda q. q\, a)$$
+check that this has the correct type!
+
+we also define quasi-negation ($\sim A = A \rightarrow p$) for some fixed arbitrary type $p$, to avoid the fact that there are either 0 or 1 functions from $A \rightarrow 0$. 
+
+now what we want to do is *embed* classical logic into constructive logic using triple negation — i.e. define a translation function that takes a classical logic formula and turn it into a constructive one. the point is that the classical logic formulae will be equivalent, but the constructive logic ones won't necessarily be equivalent..?
+
+a translation function takes a type $A$ and translates it to $A^\bullet$. 
