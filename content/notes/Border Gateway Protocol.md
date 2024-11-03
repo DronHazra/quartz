@@ -45,6 +45,8 @@ so it's worth spending some time setting up some conceptual infrastructure to un
 ## the actual protocol bits
 okkk lets actually talk about BGP
 * BGP distributes *reachability* information, computing paths between AS’s (groups of IP network prefixes, network providers) 
+* BGP is *federated* routing, each AS optimizes for their own metrics but BGP has to bridge all the ASes together
+* so BGP optimizes for reachability, maximizing connectivity between ASes
 * and what info you distribute lets you control policy
 * BGP is a *vectoring* protocol, but not a distance vector one (path vector instead) to hack some of the problems out (namely loop avoidance)
 * a BGP router distributes:  
@@ -90,30 +92,39 @@ ok *now* let’s talk about BGP
 	* each iBGP router talks to each other
 	* they advertise external peering info to all the internal peers
 * aside: these iBGP things (meshes) don’t scale
-	* cause every pair of internal BGP routers have their own BGP session, its a mesh  
-	* so routing table is O(N) larger than number of best paths  
-	* so fixing it?  
-		* route reflectors — just passing on updates between IBGP *via* best routes, and have a group of internal routers that are allowed to re-advertise routes  
+	* so routing table is $O(N)$ larger than number of best paths
+	* and each router has to maintain $O(N)$ TCP sessions
+	* so fixing it?
+		* you could just buy bigger routers
+		* route reflectors: dedicate a group of internal routers (reflectors) that distribute the path vectors to all the other BGP routers — introduce a hierarchy of BGP routers
+			* basically what you're doing here is clustering border routers
+			* each cluster has a route reflector that the routers talk to, the reflector is their link to the rest of the internal routers, 
 		* break an AS into multiple pieces and glob it together — confederation (make it look like a single AS)  
-* types of messages:  
-	* open: establish a peering session  
-	* keep alive: heartbeat/handshake  
-	* notification: shuts down a peering session  
-	* update  
-* what do you send in the announcements:  
-	* basically: the prefix, and some attributes  
-	* AS\_PATH is the path to a particular AS, from me  
-	* MULTI\_EXIT\_DISC:   
 
-* how do you decide? in order:  
-	* relationships: highest local pref  
+finally. finally! it is time to talk about how BGP works.
+
+### BGP operation
+
+- BGP establishes TCP connections with its peers, and uses this to send messages
+* types of messages:  
+	* **open:** establish a peering session  
+	* **keep alive:** heartbeat/handshake, regular intervals  
+	* **notification:** shuts down a peering session  
+	* **update:** announcing a new route, or withdrawing a previously announced route
+* what do i send in the announcements?
+	* basically: the IP prefix, and some attributes
+* what are these attributes used for?
+	* they are used to select what route to use
+	* they are how we use to encode all the business relationships we need to
+* BGP forwards information about routes in the following way:
+* how do you decide? in order:
+	* relationships: highest local pref
 	* traffic engineering:  
-		* shortest ASPATH  
-		* lowest MED (what is med? well im glad you asked, i dont know) (oh it’s MULTI\_EXIT\_DISC, the choice for which exit route to use)  
-		* prefer external learning vs internal routes (to get traffice off your network as fast as possible)  
+		* shortest `ASPATH`
+		* lowest MED (what is med? well im glad you asked, i dont know) (oh it’s `MULTI_EXIT_DISC`, the choice for which exit route to use)  
+		* i-BGP < e-BGP — prefer external leaning vs internal routes (to get traffic off your network as fast as possible)  
 	* give up, just do a tiebreak:  
 		* lowest router id
-
 we have the general concept of control and data planes
 * each layer in the network is the control plane for the data plane below  
 	* e.g. a router has a switch in it
