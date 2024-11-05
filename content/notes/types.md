@@ -5,6 +5,20 @@ tags:
   - uni
 ---
 
+## datatypes
+$\mathbb{N}$ is specified by zero and successor, there are two ways to introduce (construct) it, (zero and successor), and to eliminate you do primitive recursion
+
+(the eliminator has the already consumed subterm)
+
+## system F
+so we generalize our types from pure trees to "binding" trees (because we now have type variables). $$A::= A\rightarrow B | \alpha | \forall \alpha. A$$
+and so we need a typing context $\Theta \vdash A \, \mathrm{type}$. the typing context $\Theta$ is just a list of type variables $\alpha, \beta$ and so on. 
+
+$\Lambda$ is how you take type variables in program terms
+
+so church encodings are... defined by the elimination form? we want to be able to eliminate, for ex, booleans into an arbitrary types using `if`. so: $$\mathrm{bool} := \forall \alpha. \alpha \rightarrow \alpha \rightarrow \alpha$$
+this encodes the fact that we take two values of type $\alpha$ (one for each case) and return one of them. 
+
 skipping a bunch of stuff to lecture 8 because that's when i started taking notes
 
 - talked about adding references to the simply-typed lambda calculus
@@ -48,3 +62,4 @@ we also define quasi-negation ($\sim A = A \rightarrow p$) for some fixed arbitr
 now what we want to do is *embed* classical logic into constructive logic using triple negation — i.e. define a translation function that takes a classical logic formula and turn it into a constructive one. the point is that the classical logic formulae will be equivalent, but the constructive logic ones won't necessarily be equivalent..?
 
 a translation function takes a type $A$ and translates it to $A^\bullet$. 
+
