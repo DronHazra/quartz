@@ -15,8 +15,20 @@ In the past, I also worked with distributed systems at [Zilliqa](https://www.zil
 ## things i'm doing
 I'm working on making an actually good GPU cluster management system to free ML researchers from the shackles of Slurm. Or, if you prefer, *Ergonomic GPU Dispatch and Allocation for Machine Learning Research*, which is the working title of my undergrad thesis. I'm also learning [[notes/category theory|category theory]], auditioning for big bands, playing tennis and volleyball, and thinking about what to do next year; I'm trying to enjoy my last year of college. 
 ## things i want to do
-I'm actively looking for full-time or intern roles starting after June 2025. I'm most interested in research engineering roles, where I can spend a lot of time close to [The Iron](https://www.oldtimestrongman.com/articles/the-iron-by-henry-rollins/?curius=2869) running and iterating on ML experiments. I'm not beholden to any particular field or research direction, though I have the most direct experience working with vision and perception. I'm open to trying new things — I think I can get up to speed quickly:)
+In the past, I've insisted on defining specific problems that I wanted to work on: I wanted my interests to be concrete and well-defined. Doing this for the last few years has been fun! It's the main way I've turned "things i want to do" into "things i've done." But now, having wrapped up most of my past work, I don't have an obvious correct next step. Instead of optimizing for legibility by choosing a concrete direction roughly at random, I'm admitting my ignorance: I want to explore, learn, and train.
 
-What feels important to me at the moment is working at larger scales. Most of what I've worked on in the past has been at scales I could manage alone, so I'd be excited to work on larger systems as part of a bigger team! 
+That said: **I'm most interested in research engineering roles**, where I can spend a lot of time close to [The Iron](https://www.oldtimestrongman.com/articles/the-iron-by-henry-rollins/?curius=2869) running and iterating on ML experiments. I'm actively looking for full-time or intern roles starting after June 2025, which is when I plan to graduate. I'm not beholden to any particular field or research direction, though I have the most direct experience working with vision and perception. I think I'm capable of getting up to speed on any direction quickly:)
 
-If any of this seems interesting to you, please reach out! My email is dronh.to at the google mail website. Other admin details: I currently spend half my time in Cambridge (UK) and the other half in Toronto. I'm open to roles in the US/UK/Canada, with a modest preference for London or US east coast.  
+If I don't care about direction, what do I care about?
+
+I want to build my research skills bottom-up, working through and understanding details, turning ideas into experiments that can be iterated on. I've learned the most from the people I've worked with, so what I care about most is the people I'd work with. I think I would most enjoy:
+
+1. Working at a larger scales (both compute and people), contributing as part of a larger team, training engineering skills and ML debugging intuition
+2. Working at the smallest scale, spending extensive time with a single mentor, learning research heuristics by osmosis
+
+Basically: I want to focus on training my low-level execution skills and let the environment and my subconscious generate some higher-level insights in the background. 
+
+If any of this seems interesting to you, please reach out! Admin details:
+- Email: dronh.to at the google mail website
+- Current location: half Cambridge (UK), half Toronto
+- Future location preference: anywhere in US/UK/Canada, modest preference for London or US east coast
