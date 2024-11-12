@@ -94,3 +94,7 @@ ok now a somewhat bigger picture: thus far we’ve been talking about distribute
 
 
 [[notes/multicast routing]]
+
+[[telephone routing]]
+
+[[flow control]]

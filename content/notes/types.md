@@ -63,3 +63,12 @@ now what we want to do is *embed* classical logic into constructive logic using 
 
 a translation function takes a type $A$ and translates it to $A^\bullet$. 
 
+## normalization
+
+the syntactic technique does not work because the structure of a $\lambda$-term does not say anything about the expression contained within
+
+so we introduce some extra machinery — the [[Fundamental Lemma of Type Theory]] 
+
+the logical relations
+
+reducibility candidate 

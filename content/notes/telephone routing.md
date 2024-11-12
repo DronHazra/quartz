@@ -1,0 +1,65 @@
+---
+title: telephone routing
+tags:
+  - uni
+  - notes
+---
+- designed by cambridge people?
+- unlike the internet, telephone network is very highly structured
+- 3-level hierarchy, fully-connected core (full mesh)
+- real exchange carriers (big building  with a big system)
+- so everyone in a city block/building/whatever calls the exchange, the person sitting in the exchange asks who you're talking to, physically move the cable
+	- automated (analog!) switching was first with rotary telephone
+	- sending pulses down the wire that operate intermediate switches
+- if you're connected with the same exchange, the switch will connect to directly through
+- telephone exchanges are designed to be *highly reliable*. very large amount of redundancy. you could shoot a gun through it
+	- mean time between failure ~100 years 
+	- downtime is less than a few minutes per year
+	- even the original mechanical ones are insanely reliable.
+- this was because they had a huge amount of capex to build the phone exchange, so you would really they rather not break
+- lol at&t were the biggest consumers of wood while they were setting up the telephone network
+
+
+
+- telephone and internet networks are very different
+	- phone is structured, internet is heterogeneous
+	- phone network load is predictable
+		- longer short-distance calls, shorter long-distance calls (based on pricing) (exponential call "holding" time)
+			- assumption doesn't always hold! e.g. on mother's day or nye, everyone calls family ergo lots of long-distance calls at once
+		- calls arrive independently of each other (poisson distribution)
+	- single provider controls the entire core
+	- highly connected network
+	- all connections require the same resources
+- the reliability constraint, compute resources at the time, the original mechanical/electrical designs means that *telephone routing is simple*
+	- complex things fail more often => things need to be simple
+- DNHR
+	- works well for multiple timezones, since large chunks of the networks might be expected to be idle
+	- accept call if one-hop is available, then drop
+	- measure usage over days
+	- but might have metastability
+		- you might move to 2-hop route, but then when calls finish on the 1-hop route you'll still be stuck on the 2-hop route
+- can do trunk reservation ? dunno what this is
+- and you can do real-time
+	- this is quite complex if you don't have much compute!
+- dynamic alternative routing
+	- came out of cambridge! (~35 years ago)
+	- when they came up with "random routing", phone companies didn't like it cause they were used to highly engineered systems
+	- ok think about properties of telephone nets:
+		- fully connected network (trunk network)
+		- relatively small number of nodes 
+		- stochastic traffic (low variance)
+	- if the direct route is saturated, pick a random alternative "sticky random"
+		- since everyone is doing this, you're pretty evenly distributing traffic across the network
+		- the disadvantage is that you displace some one-hop routes
+	- so the solution is you do "trunk reservation"
+		- you set aside some amount of traffic only for one-hop users
+	- no traffic analysis, no centralization, very simple
+	- randomly assigned ([[valiant load balancing]])
+	- you can do *some* stats to find out the optimal trunk reservation fraction
+- can you do better than 2 hops?
+	- no, you just use more resources and not much gain
+- multiple attempts
+	- eh
+- repacking
+	- move all existing calls from 2-hop to 1-hop 
+

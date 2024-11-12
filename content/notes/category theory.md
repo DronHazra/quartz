@@ -7,6 +7,7 @@ aliases:
   - category theory
   - CAT
 ---
+
 define [[cartesian closed pre-order]]
 
 so we'll link this with [[intuitionistic propositional logic]], and show that there's an isomorphism between IPL and a cartesian closed preorder
