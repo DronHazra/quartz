@@ -98,3 +98,31 @@ ok now a somewhat bigger picture: thus far we’ve been talking about distribute
 [[telephone routing]]
 
 [[flow control]]
+
+## scheduling
+the overview here is basically "what if we didn't just do first-come-first-served scheduling." in doing so, we'll have to talk about what we want out of a scheduler, how good schedulers can be, and where they can be used. 
+
+### requirements of a scheduler
+
+
+
+- ease of implementation
+	- [[You Can't Do Anything With A Packet]]
+- performance bounds
+- fairness
+	- [[notes/max-min fairness|max-min fairness]]
+	- protect flows from other misbehaving flows (avoid one flow taking more than its "fair share")
+
+
+so we talked about scheduling in routing, and the main reason that you do anything fancier that first come first served is to get "fairness." the main model we use is [[max-min fairness]]
+
+the model to use here is [[Generalized Processor Sharing]]. in general, the broader internet doesn't (or can't) implement this kind of thing.
+
+one way to attempt this is just a [[Weighted Round Robin]] (weighted fair queueing? nvm it's not WFQ) . it's easy to implement, but:
+- mean packet sizes can differ between flows (e.g. audio vs video traffic)
+- mean packet sizes can *vary* (think compression)
+- some flows might only be visited once (short-lived flows)
+
+so we can help the packet size issue by using [[Deficit Round Robin]]
+
+[[Weighted Fair Queuing]]
