@@ -102,17 +102,24 @@ ok now a somewhat bigger picture: thus far we’ve been talking about distribute
 ## scheduling
 the overview here is basically "what if we didn't just do first-come-first-served scheduling." in doing so, we'll have to talk about what we want out of a scheduler, how good schedulers can be, and where they can be used. 
 
+scheduling in a network is basically a simpler version of OS scheduling, since you have many fewer resources to manage. there are a couple unique things about packet scheduling that make the tradeoffs play out differently ([[notes/You Can't Do Anything With A Packet|You Can't Do Anything With A Packet]]). 
 ### requirements of a scheduler
-
-
-
 - ease of implementation
 	- [[You Can't Do Anything With A Packet]]
 - performance bounds
-- fairness
+- fairness (and relatedly, protection)
 	- [[notes/max-min fairness|max-min fairness]]
 	- protect flows from other misbehaving flows (avoid one flow taking more than its "fair share")
 
+there are various ways to vary a schedules:
+- how many priority levels?
+- work-conserving? [[work-conserving scheduler]]
+	- work-conserving schedules get more utilization, potentially at the cost of jitter/instability in servicing time
+- how granular are your service levels?
+	- per application? user? end-system?
+- how do you service individual queues?
+
+the simplest scheduler is 
 
 so we talked about scheduling in routing, and the main reason that you do anything fancier that first come first served is to get "fairness." the main model we use is [[max-min fairness]]
 
@@ -126,3 +133,13 @@ one way to attempt this is just a [[Weighted Round Robin]] (weighted fair queuei
 so we can help the packet size issue by using [[Deficit Round Robin]]
 
 [[Weighted Fair Queuing]]
+
+## datacenter networks
+
+problem: synchronization messages (`memcached`, Naiad, other things) get slowed down by high throughput (e.g. data), and so the whole distributed algorithm runs slower.
+
+so we can implement [[QJump]]
+
+code lives in the hypervisor system
+
+qjump doesn't scale beyond modest size datacenters
