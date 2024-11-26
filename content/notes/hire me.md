@@ -21,9 +21,9 @@ That said: **I'm most interested in research engineering roles**, where I can sp
 
 If I don't care about direction, what do I care about?
 
-I want to build my research skills bottom-up, working through and understanding details, turning ideas into experiments that can be iterated on. I've learned the most from the people I've worked with, so what I care about most is the people I'd work with. I think I would most enjoy:
+I want to build my research skills bottom-up, working through and understanding details, turning ideas into experiments that can be iterated on. I've learned the most from the people I've worked with in the past, so what I care about most is the people I'd work with in the future. I think I would most enjoy:
 
-1. Working at a larger scales (both compute and people), contributing as part of a larger team, training engineering skills and ML debugging intuition
+1. Working at larger scales (both compute and people), contributing as part of a larger team, training engineering skills and ML debugging intuition
 2. Working at the smallest scale, spending extensive time with a single mentor, learning research heuristics by osmosis
 
 Basically: I want to focus on training my low-level execution skills and let the environment and my subconscious generate some higher-level insights in the background. 
