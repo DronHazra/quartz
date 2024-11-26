@@ -143,3 +143,34 @@ so we can implement [[QJump]]
 code lives in the hypervisor system
 
 qjump doesn't scale beyond modest size datacenters
+
+## a perspective on optimization as network protocols
+
+routing:
+- fixing the paths, how do you set the rates?
+- fixing the rates, how do you choose traffic paths?
+- where do you set the path rates?
+	- centrally
+	- at endpoints (distributed algo)
+	- routers
+
+objectives?
+- minimize system-wide delay with
+	- variable: routing 
+	- fixed: source-destination traffic rates
+	- you have a bunch of flows that are sending data at certain rates (between a source and a destination)
+	- and you vary the paths that you send the traffic along
+- maximize system-wide utility with
+	- variable: traffic rates
+	- fixed: paths
+	- each source chooses the rates they'll send at, and we want to maximize the overall system utility
+	- notably: can't centralize this easily, since you can't know everyone's utility fns
+	- "billing" view
+- constraints:
+	- capacity constraints
+
+
+ok basically there's this cool way of thinking about TCP congestion control as "a distributed asynchronous algorithm" to solve this problem — reflects the evolutionary nature
+
+
+so in the congestion control model, we can do "bidding" on the bandwidth, and you can coordinate this with the network with pricing (congestion charging) $$x_s = \frac{w_s} {p_s},$$ so basically "i'm willing to pay this much" is the $w_s$, network says "i'm charging you this much per unit bandwidth" $p_s$, and this means the bandwidth you *get* is $x_s$. 
