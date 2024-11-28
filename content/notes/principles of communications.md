@@ -174,3 +174,26 @@ ok basically there's this cool way of thinking about TCP congestion control as "
 
 
 so in the congestion control model, we can do "bidding" on the bandwidth, and you can coordinate this with the network with pricing (congestion charging) $$x_s = \frac{w_s} {p_s},$$ so basically "i'm willing to pay this much" is the $w_s$, network says "i'm charging you this much per unit bandwidth" $p_s$, and this means the bandwidth you *get* is $x_s$. 
+
+
+## capacity planning
+
+fill this in later, but roughly you measure things and reallocate capacity
+
+## system design in networking
+resources to manage:
+- time
+- space
+	- metcalfe's law: net value is square of number of nodes
+		- network effects, i.e. if each new user brings resources with them the value goes up by n even though marginal cost is 1
+		- 
+	- networks can often "scale out"
+	- self scaling = added cost costs less than resource gained
+	- efficiencies of scale
+- computation
+- energy
+- money
+- labour
+	- fiber rollout in the uk: 2008 crisis => recession => cheap labour => lots of fiber rollout
+- education/skills
+
