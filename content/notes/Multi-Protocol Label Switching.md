@@ -38,6 +38,7 @@ the above description doesn't specify how to decide or communicate the forwardin
 
 >[!question] how is forwarding info decided? probably by the label distribution protocol? i don't know
 
+keywords: frame relay — trade delay for optimal path
 ## downstream benefits and uses
 MPLS labels can be used with differentiated service, letting you provide QoS. this is because you can configure LSPs between each ingress/egress pair, so by either using the `exp` bits or by creating an LSP for each traffic class you can implement differentiated service in that bit of the network. this decouples the number of traffic-class-paths from the number of flows by using MPLS' labels, so it scales better. it also still interoperates with the DS field-based architecture (what is this?). 
 

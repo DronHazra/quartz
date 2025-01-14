@@ -17,6 +17,16 @@ tags:
 - a simple application is [[expanding ring search]] which you can use for resource discovery
 
 ## implementing multicast
+- multicast: 
+	- send to groups (manual subscription)
+- broadcast:
+	- send to everyone
+- anycast:
+	- packet delivered to one of the recipients
+- unicast:
+	- point-to-point
+
+
 - there are different flavours of multicast
 	- **unicast:** point to point
 	- **single-source multicast:** point to multipoint

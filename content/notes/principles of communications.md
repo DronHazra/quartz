@@ -34,6 +34,8 @@ ok now a somewhat bigger picture: thus far we’ve been talking about distribute
 
 [[telephone routing]]
 
+compact routing 
+
 [[flow control]]
 
 ## scheduling

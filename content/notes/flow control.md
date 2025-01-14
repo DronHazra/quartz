@@ -17,7 +17,10 @@ tags:
 normally flow control is handled by tcp/quic/transport layer (i.e. as an end-to-end system). you can't have flow control in IP, for some reason, but you can have flow control in datalink layers too (esp in shared media layer, where we call it "contention control" (collisions!))
 
 - forward reference to control theory! 
-	- source -> ($\lambda$) buffer/bottleneck? -> $\mu$ -> sink (round trip) -> source
+	- ![[Pasted image 20250113165934.png]]source -> ($\lambda$) buffer/bottleneck? -> $\mu$ -> sink (round trip) -> source
+	- source sends at some rate $\lambda$
+	- into a buffer of size $B$
+	- which is serviced at rate up to $\mu$
 	- this is abstract, but on any link you'll have *some* bottleneck so its not too bad a model 
 
 
@@ -28,9 +31,9 @@ ok! now a taxonomy
 	- "can i have this?" "no" "bye"
 	- operation?
 		- call setup, then transmit data
-		- network defines parameters
-		- user chooses parameter values they need
-		- network says yes or no
+		- network defines parameters to decide
+		- user (source) chooses parameter values they need
+		- network says yes or no (i.e. decides to *admit* or not)
 	- notably the network has to police the usage
 - closed loop
 	- feedback loop
@@ -52,7 +55,7 @@ a couple things to think about here:
 	- representative
 	- verifiable
 	- preservable (closed under network transformations)
-	- useable..?
+	- usable..?
 - for ex!
 - time series of interarrival times (sequence of timestamps)
 	- not very useful, but *very* representative!

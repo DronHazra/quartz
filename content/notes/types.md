@@ -72,3 +72,19 @@ so we introduce some extra machinery — the [[Fundamental Lemma of Type Theory]
 the logical relations
 
 reducibility candidate 
+
+
+
+## classical logic
+you don't have a single proof goal — you can have multiple and retain optionality (which is why you can't prove e.g. law of excluded middle constructively)
+
+so how do we write up a classical logic as a PL? you don't have a single proof goal anymore, so the "proofs = programs" breaks down. $$\Gamma, \Delta \vdash A \,\text{true}, \Gamma, \Delta \vdash A \,\text{false}$$
+this mirrors the sequent calculus, where proofs of true are sequent right rules and proofs of false are sequent left rules. 
+
+you add all the introduction rules (point being that sequent calculus only has introduction rules), but then you can't actually *use* your data, so you need to add a new judgement, contradiction. that's what lets you use your data, it lets you shift focus between your proof goals.
+
+now defining terms, in essence you only have constructors. to evolve terms, you have *confrontations* $\langle e |_A k \rangle$, in essence just an argument. 
+
+computationally/systems view: you have two stacks, one with data = programs = proofs, the other with codata = consumers = refutations. consuming a consumer = producer, $\mu$ abstraction is a promise / closed system with hole
+
+and so you end up with [[Continuation Passing Style]], producers are data and consumers are continuations (something something goto)
