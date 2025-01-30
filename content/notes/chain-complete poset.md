@@ -2,5 +2,7 @@
 title: chain-complete poset
 tags:
   - definition
+aliases:
+  - cpo
 ---
-a chain-complete poset is a [[notes/partially ordered set|poset]] where every countable, increasing chain has a least upper bound
+a [[notes/partially ordered set|poset]] where every countable, increasing chain has a least upper bound

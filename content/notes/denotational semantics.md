@@ -7,3 +7,4 @@ aliases:
   - DenSem
 ---
 [[notes/Domain Theory]]
+[[Scott Induction]]
