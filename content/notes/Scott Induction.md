@@ -19,4 +19,3 @@ then $\text{fix}(f) \in S$. written out more explicitly:
 - $f(S) \subseteq S$ 
 - $\bigsqcup s_n \in S$
 
-
