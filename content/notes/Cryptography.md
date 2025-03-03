@@ -77,4 +77,18 @@ different types of keys:
 # security definitions
 one of the themes of this course so far is the emphasis on answering the question: *what is it that we mean by "secure"*?
 
-here we can start with a simple taxonomy: [[computational security]] and [[unconditional security]]
+here we can start with a simple taxonomy: 
+![[computational security]] 
+
+and ![[unconditional security]]
+
+# rough notes (to be organized later)
+
+[[negligible function]]
+
+## modes of operation
+- [[electronic codebook]]
+- [[cipher block chaining]]
+- [[cipher feedback mode]]
+- [[output feedback mode]]
+- [[counter mode]]
