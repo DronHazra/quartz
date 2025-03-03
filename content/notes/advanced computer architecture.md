@@ -7,7 +7,8 @@ tags:
 chiplets:
  - yield for big dies is low, yield for small dies is high (because chance of defect is the same but you have to throw away a small die vs big die?)
 
-## pipelining
+predictors are everywhere in high performance processors because they have *so many transistors*
+# pipelining
 so in a non-pipelined processor, we have CPI of 1 (good!) but also our clock period will be slow (since it has to respect the worst-case time + margin).
 
 when we pipeline, we have some overhead for adding pipeline registers (ff). each extra FF is like an extra constant c, so our period goes from $T+C$ to $T/2 + 2C$, so there is actually a tradeoff. you have to account for clock skew and timing requirements for your pipeline registers — important for very deep pipelines
@@ -22,7 +23,7 @@ in the ideal pipeline case, you have a CPI of 1 (no stalls). e.g.
 
 `pipelined CPI = ideal pipeline CPI + pipeline stalls/instruction`
 
-### pipelining hazards
+## pipelining hazards
 in the non-superscalar case, we have pretty simple hazards:
 - data hazard (data dependencies)
 - control hazard (branch dependencies)
@@ -44,4 +45,35 @@ inserting stalls/bubbles also has overhead! to reduce these, you designate pipel
 it's difficult to guarantee that all instructions execute in the same clock cycle, so we can extend our execute stage with multiple different pipelines.
 
 take the blackparrot:
-- 
+
+TODO: look at blackparrot
+
+![[diversified pipeline]]
+
+### control hazards
+- branches are hard since they're evaluated in the execute stage, so they require the following instructions to be turned into NOPs
+- assuming branch is not taken
+	- is easy because its simple
+- evaluate the branch earlier
+	- i.e. in the decode stage
+	- necessitates very simple branch logic, and more forwarding paths (from previous mem/wb to *decode* now, since the branch might required)
+	- reduces branch penalty to single cycle
+- delayed branch
+	- assert: instruction after branch is always executed, called the [[branch delay slot]]
+	- largely ineffectual these days because of branch predictors
+- [[branch prediction]]
+
+
+
+## analyzing pipelines
+
+- you have critical path of delay $T$. divide it into $S$ stages and add some clocking overhead, since each stage requires timing constraints on the registers, and possible clock skew — so you get $T/S + C$ as the new clock period
+- assume further that stalls happen at frequency $b$, and assume the cost $\propto S$
+- the clocking overhead and stalls mean that there is some optimal pipeline depth
+- this is *shallower* if $b$ or $C$ is high
+	- reducing $b$ (reducing structural hazards, better branch prediction etc) or $C$ (more aggressive clock tree, faster registers) but this costs *transistors*
+	- more transistors => more area, more power
+- optimize for area => shallower pipeline
+- optimize for performance => deeper pipeline (see pentium 4 in 2004, 31 stages!)
+- optimize for power => shallower pipeline
+
