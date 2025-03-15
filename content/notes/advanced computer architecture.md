@@ -77,3 +77,25 @@ TODO: look at blackparrot
 - optimize for performance => deeper pipeline (see pentium 4 in 2004, 31 stages!)
 - optimize for power => shallower pipeline
 
+## supervision 4
+parallelism: 
+- instruction, data
+- domain accelerators
+- DDR logic (4 memory controllers)
+- power/efficiency cores
+
+snoopy cache marks:
+- total order
+- need broadcast
+- to eliminate race conditions
+
+memory consistency model:
+- ordering of memory operations from other hardware threads
+- sequential consistency:
+	- result of any execution is the same as if all operations happened in *some* total order (serializability) *and* that the thread is in program order
+- total store order:
+	- store -> load order within a thread is not specified (allow earlier loads to overtake stores)
+- har this is just a "description" for what the intel model actually does
+- coalescing write buffer
+- write-through vs write-back and multi-copy atomicity
+	- 
