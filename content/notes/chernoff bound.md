@@ -1,0 +1,1 @@
+given $n$ independent 

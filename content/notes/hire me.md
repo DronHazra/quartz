@@ -13,7 +13,9 @@ Most of my experience is in ML research, in and around AI safety and robustness.
 
 In the past, I also worked with distributed systems at [Zilliqa](https://www.zilliqa.com/) and did some [weird stuff](https://dronhazra.com/posts/pizza-prototypes) at [X](https://x.company/). I have a somewhat amateur fascination with generative models for music, and I used to be mediocre at math olympiads, back when I got the median score at the Canadian Math Olympiad. Here's [[DronHazra.pdf|my resume]]. 
 ## things i'm doing
-I'm working on making an actually good GPU cluster management system to free ML researchers from the shackles of Slurm. Or, if you prefer, *Ergonomic GPU Dispatch and Allocation for Machine Learning Research*, which is the working title of my undergrad thesis. I'm also learning [[notes/category theory|category theory]], auditioning for big bands, playing tennis and volleyball, and thinking about what to do next year; I'm trying to enjoy my last year of college. 
+I'm currently a Research Fellow at [Goodfire](goodfire.ai), where I'm training interpreter models like SAEs at scale. 
+
+I'm also working on making an actually good GPU cluster management system to free ML researchers from the shackles of Slurm. Or, if you prefer, *Ergonomic GPU Dispatch and Allocation for Machine Learning Research*, which is the working title of my undergrad thesis. I'm also learning [[notes/category theory|category theory]], auditioning for big bands, playing tennis and volleyball, and thinking about what to do next year; I'm trying to enjoy my last year of college. 
 ## things i want to do
 In the past, I've insisted on defining specific problems that I wanted to work on: I wanted my interests to be concrete and well-defined. Doing this for the last few years has been fun! It's the main way I've turned "things i want to do" into "things i've done." But now, having wrapped up most of my past work, I don't have an obvious correct next step. Instead of optimizing for legibility by choosing a concrete direction roughly at random, I'm admitting my ignorance: I want to explore, learn, and train.
 

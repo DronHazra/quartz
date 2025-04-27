@@ -4,7 +4,23 @@ tags:
   - uni
   - notes
 ---
-start with some specifications of what we want:
+one of the themes of cryptography is formally defining what we mean by "secure". there are many things we might want to do. for example, in a [[symmetric encryption]], we might want to prevent adversaries from: 
+
+- finding the secret/private key
+- find the plaintext $M$
+- determine any bit of $M$
+- determine any information about $M$ from $C$ ([[notes/unconditional security|unconditional security]])
+- compute any function of $M$ from $C$ ([[semantic security]])
+
+and our adversaries might have different capabilities:
+- attacker has ciphertext
+- and $(M, C)$ pairs
+- and [[oracle access]] to `Enc` or `Dec`
+- of varying degrees (how many applications of `Enc` or `Dec`?)
+- has varying amounts of compute
+- and varying knowledge of the algorithms used (see [[kerckhoffs principle]])
+
+we also have the different security properties we might want:
 - confidentiality
 	- information accessible only to those authorized
 - integrity
@@ -12,36 +28,21 @@ start with some specifications of what we want:
 - availability
 	- authorized users have access to data/resources when required
 
-
 each of these have attacks associated with them:
 - confidentiality: eavesdropping (passive)
 - integrity: middle-person (or man-in-the-middle, active)
 - availability: DDoS
 
-## encryption schemes
-declaratively, we specify 3 things:
-
-1. a key generator `Gen`
-2. an encryption procedure `Enc`
-3. a decryption procedure `Dec`
-
-and we have goals to prevent adversaries from:
-- finding the secret/private key
-- find the plaintext `M`
-- determine any bit of `M`
-- determine any information about `M` from `C`
-- compute any function of `M` from `C` ([[semantic security]])
-
-and threat modelling:
-- attacker has ciphertext
-- and $(M, C)$ pairs
-- and [[oracle access]] to enc or dec
-- of varying degrees (how many applications of enc or dec?)
-- has varying amounts of compute
-- and varying knowledge of the algorithms used (see [[kerckhoffs principle]])
-
 this is all to say that there are many definitions for what it means for a cryptographic system to be *secure*. 
 
+in my view, this course separates into two main themes: **specifying what it means to be secure** and **constructing and composing primitives that satisfy these.** we will work primarily with [[security games]]. 
+
+this course, as designed, focuses on some core techniques:
+- [[notes/symmetric encryption|symmetric encryption]]
+- [[message integrity]]
+- [[hash functions]]
+- [[asymmetric encryption]]
+these connect to our goals above in different ways. 
 ## message integrity schemes
 to verify that the message arrived intact, we need:
 1. a key generator

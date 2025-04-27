@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"577099b0f851b997","type":"file","file":"notes/dissertation.md","x":-880,"y":-440,"width":400,"height":400},
+		{"id":"c1ef20025c485b85","x":-420,"y":-480,"width":415,"height":171,"type":"text","text":"## cluster management"},
+		{"id":"045d93430eaef06c","x":-229,"y":-125,"width":449,"height":170,"type":"text","text":"## system model\n"},
+		{"id":"4f8da9b69027a0a4","type":"text","text":"## system model\n","x":-320,"y":100,"width":449,"height":170}
+	],
+	"edges":[]
+}
