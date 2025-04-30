@@ -1,7 +1,7 @@
 ---
-title: dissertation writing
-draft: "true"
+title: "dissertation"
 ---
+
 ![[dissertation/introduction-preparation]]
 
 ![[dissertation/implementation]]
