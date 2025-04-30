@@ -4,32 +4,7 @@ draft: "true"
 ---
 ![[dissertation/introduction-preparation]]
 
-# implementation
-## how bulletin works
-### architecture overview (client/server/worker)
-### python dispatch (client)
-#### matching the user's mental model
-#### (de-)serializing closures and their environments
-
-### job execution (worker)
-
-#### crash-recover model
-
-#### `cgroups` for resource limits
-
-#### `go` context timeouts for time limits
-
-#### stdout/stderr streaming? (TODO)
-
-### scheduling + allocation (server)
-
-#### goroutine model for scheduler
-
-#### using postgres isolation levels
-
-#### worker connection management/failure detection (keepalives)
-
-#### authentication (TODO)
+![[dissertation/implementation]]
 
 # evaluation
 ## correctness
